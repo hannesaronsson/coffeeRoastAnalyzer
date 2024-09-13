@@ -16,6 +16,10 @@ Upload your RAW DNG images of coffee grounds to analyze the roast degree.
 This app automatically computes color statistics, and provides visualizations.
 """)
 
+
+def remove_outliers(data, m=2):
+    return data[abs(data - np.mean(data)) < m * np.std(data)]
+
 # Sidebar for calibration and settings
 st.sidebar.title("Calibration and Settings")
 
@@ -115,10 +119,10 @@ if uploaded_files is not None and len(uploaded_files) > 0:
             
             # Compute statistics within the mask
             l_channel = roi_lab[:,:,0]
-            mean_lightness = cv2.mean(roi_lab)[0]
-            std_lightness = cv2.meanStdDev(roi_lab)[1][0][0]
+            mean_lightness = cv2.mean(l_channel)[0]
+            std_lightness = cv2.meanStdDev(l_channel)[1][0][0]
             # Extract histogram data
-            hist_data = roi_lab.ravel()
+            hist_data = l_channel.ravel()
             
             # Save results
             mean_lightness_values.append(mean_lightness)
