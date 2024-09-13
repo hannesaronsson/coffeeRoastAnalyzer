@@ -114,11 +114,11 @@ if uploaded_files is not None and len(uploaded_files) > 0:
             # Create a mask
             
             # Compute statistics within the mask
-            l_channel = lab_image[:,:,0]
-            mean_lightness = cv2.mean(l_channel)[0]
-            std_lightness = cv2.meanStdDev(l_channel)[1][0][0]
+            l_channel = roi_lab[:,:,0]
+            mean_lightness = cv2.mean(roi_lab)[0]
+            std_lightness = cv2.meanStdDev(roi_lab)[1][0][0]
             # Extract histogram data
-            hist_data = l_channel.ravel()
+            hist_data = roi_lab.ravel()
             
             # Save results
             mean_lightness_values.append(mean_lightness)
